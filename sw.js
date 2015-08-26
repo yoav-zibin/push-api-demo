@@ -1,10 +1,10 @@
 var port;
 
 self.addEventListener('push', function(event) {  
-  var messageData = event.data;
+  // var messageData = event.data; PushMessageData not yet supported.
 
   var title = 'Yay a message.';  
-  var body = messageData + 'subscribed to the chat.';  // should be messageData.text(), but that's not supported in Gecko yet.
+  var body = 'Subscription has changed.';  
   var icon = 'push-icon.png';  
   var tag = 'push';
 
@@ -16,10 +16,9 @@ self.addEventListener('push', function(event) {
     })  
   );
 
-  port.postMessage('hello again!');
+  port.postMessage('Subscription has changed.');
 });
 
 self.onmessage = function(e) {
   port = e.ports[0];
-  port.postMessage('hello from SW');
 }

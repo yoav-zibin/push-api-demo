@@ -13,3 +13,7 @@ body {
 h1 {
   margin: 0;
 }
+
+input[type="text"] {
+	margin-left: 1em;
+}

@@ -3,6 +3,7 @@ var useNotifications = false;
 
 var subBtn = document.querySelector('.subscribe');
 var sendBtn;
+var sendInput;
 
 var nameForm = document.querySelector('#form');
 var nameInput = document.querySelector('#name-input');
@@ -101,7 +102,7 @@ function initialiseState(reg) {
       // set up a message channel to communicate with the SW
       var channel = new MessageChannel();
       channel.port1.onmessage = function(e) {
-        alert('Message received from SW: ' + e.data);
+        alert(e.data);
       }
 
       mySW = reg.active;
@@ -198,8 +199,16 @@ function updateStatus(endpoint,statusType) {
     console.log(endpoint);
   
     sendBtn = document.createElement('button');
-    sendBtn.textContent = 'Send Push Message';
+    sendInput = document.createElement('input');
+
+    sendBtn.textContent = 'Send Chat Message';
+    sendBtn.onclick = function() {
+      alert('Messaging not yet implemented, as PushMessageData not yet supported.');
+    }
+    sendInput.setAttribute('type','text');
+
     document.body.appendChild(sendBtn);
+    document.body.appendChild(sendInput);
 
     var request = new XMLHttpRequest();
 
@@ -219,6 +228,7 @@ function updateStatus(endpoint,statusType) {
     // });
   } else if(statusType === 'unsubscribe') {
     document.body.removeChild(sendBtn);
+    document.body.removeChild(sendInput);
 
     var request = new XMLHttpRequest();
 
@@ -235,11 +245,17 @@ function updateStatus(endpoint,statusType) {
 
   } else if(statusType === 'init') {
     sendBtn = document.createElement('button');
-    sendBtn.textContent = 'Send Push Message';
+    sendInput = document.createElement('input');
+
+    sendBtn.textContent = 'Send Chat Message';
+    sendBtn.onclick = function() {
+      alert('Messaging not yet implemented, as PushMessageData not yet supported.');
+    }
+    sendInput.setAttribute('type','text');
+
     document.body.appendChild(sendBtn);
+    document.body.appendChild(sendInput);
 
-    // sendBtn.addEventListener('click',function() {
 
-    // });
   }
 }

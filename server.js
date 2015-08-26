@@ -37,7 +37,8 @@ https.createServer(options, function (request, response) {
                 path: URLParts.pathname,
                 method: 'PUT',
                 headers: {
-                  'Content-Type': 'plain/text'
+                  'Content-Type': 'plain/text',
+                  'Authorization': 'key=AIzaSyBN3u3TLPD-IMVB-GdE798tuinHWdQ3H1Y'
                 }
               };
 
