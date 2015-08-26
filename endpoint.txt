@@ -1,1 +1,0 @@
-subscribe,Bob,https://updates.push.services.mozilla.com/push/gAAAAABV3aXJ8RktQXAaF-EmAYh3wSzIKgrRaHpLiWkL6RZhBtQuK-1EWIUqRcGrk7eldiA4xsV6ZdzBdHCFj-7eazbpv6Ns7XeBDSSnhvmXpw6Lzs2U5Jmm-O0GRyOmExTci1fMGb5O7sh_gAJgheE0y1ROtwCYNgCJvXUwUY44skzM75c4rcQ=
