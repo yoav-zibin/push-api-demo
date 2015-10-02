@@ -288,5 +288,7 @@ function showChannelMessage(data) {
         subscribersList.children[i].parentNode.removeChild(subscribersList.children[i]);
       }
     }
+  } else {
+    alert(data);
   }
 }
