@@ -65,12 +65,18 @@ https.createServer(options, function (request, response) {
           fs.readFile("endpoint.txt", function (err, buffer) {
             var newString = '';
             var string = buffer.toString();
+            console.log('My string is: ' + string);
             var array = string.split('\n');
+            console.log('My array is: ' + array);
             for(i = 0; i < (array.length-1); i++) {
               var subscriber = array[i].split(',');
               
               console.log('Unsubscribe: ' + subscriber[1]);
+              console.log(subscriber[2]);
+
               URLParts = url.parse(subscriber[2]);
+
+
 
               // send request to each push endpoint telling them the subscriber
               // has unsubscribed.
@@ -79,23 +85,24 @@ https.createServer(options, function (request, response) {
                 path: URLParts.pathname,
                 method: 'PUT',
                 headers: {
-                  'Content-Type': 'plain/text'
+                  'Content-Type': 'plain/text',
+                  'Authorization': 'key=AIzaSyBN3u3TLPD-IMVB-GdE798tuinHWdQ3H1Y'
                 }
               };
 
-              var unsubscribeRequest = https.request(options, function(unsubscribeResponse) {
-                console.log("Unsubscribe statusCode: ", unsubscribeResponse.statusCode);
-                console.log("Unsubscribe headers: ", unsubscribeResponse.headers);               
+              var pushRequest = https.request(options, function(pushResponse) {
+                console.log("Unsubscribe statusCode: ", pushResponse.statusCode);
+                console.log("Unsubscribe headers: ", pushResponse.headers);               
 
-                unsubscribeResponse.on('data', function(d) {
+                pushResponse.on('data', function(d) {
                   console.log('I got an unsubscribe response');
                 });
               });
 
-              unsubscribeRequest.write(subscriber[1]);
-              unsubscribeRequest.end();
+              pushRequest.write(subscriber[1]);
+              pushRequest.end();
               
-              unsubscribeRequest.on('error', function(e) {
+              pushRequest.on('error', function(e) {
                 console.error(e);
               });
 
@@ -104,13 +111,12 @@ https.createServer(options, function (request, response) {
               } else {
                 newString += array[i] + '\n';
               }
+
+              fs.writeFile('endpoint.txt', newString, function (err) {
+                  if (err) throw err;
+                  console.log('Subscriber unsubscribed');
+              });
             }
-
-
-            fs.writeFile('endpoint.txt', newString, function (err) {
-              if (err) throw err;
-              console.log('Subscriber unsubscribed');
-            });
               
           });
 

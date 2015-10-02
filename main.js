@@ -172,6 +172,8 @@ function unsubscribe() {
         
         isPushEnabled = false;
 
+ 
+        setTimeout(
         // We have a subcription, so call unsubscribe on it
         subscription.unsubscribe().then(function(successful) {
           subBtn.disabled = false;
@@ -185,7 +187,8 @@ function unsubscribe() {
 
           console.log('Unsubscription error: ', e);
           subBtn.disabled = false;
-        });
+        })
+        ,3000);
       }).catch(function(e) {
         console.log('Error thrown while unsubscribing from ' +
           'push messaging.', e);
