@@ -172,7 +172,10 @@ function unsubscribe() {
         
         isPushEnabled = false;
 
- 
+        // setTimeout used to stop unsubscribe being called before the message
+        // has been sent to everyone to tell them that the unsubscription has
+        // occurred, including the person unsubscribing. This is a dirty
+        // hack, and I'm probably going to hell for writing this.
         setTimeout(function() {
         // We have a subcription, so call unsubscribe on it
         subscription.unsubscribe().then(function(successful) {
