@@ -1,7 +1,8 @@
 var port;
 
 self.addEventListener('push', function(event) {  
-  // var messageData = event.data; PushMessageData not yet supported.
+  var messageData = event.data;
+
 
   var title = 'Yay a message.';  
   var body = 'Subscription has changed.';  
@@ -16,7 +17,7 @@ self.addEventListener('push', function(event) {
     })  
   );
 
-  port.postMessage('Subscription has changed.');
+  port.postMessage(messageData + '\'s subscription has changed.');
 });
 
 self.onmessage = function(e) {
