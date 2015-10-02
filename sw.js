@@ -1,6 +1,6 @@
 var port;
 
-self.addEventListener('push', function(event) {  
+self.addEventListener('push', function(event) {
   var messageData = event.data.split(','); 
 
   if(messageData[0] === 'subscribe') {
