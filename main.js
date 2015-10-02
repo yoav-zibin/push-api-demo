@@ -5,10 +5,6 @@ var subBtn = document.querySelector('.subscribe');
 var sendBtn;
 var sendInput;
 
-var controlsBlock = document.querySelector('.controls');
-var subscribersList = document.querySelector('.subscribers ul');
-var messagesList = document.querySelector('.messages ul');
-
 var nameForm = document.querySelector('#form');
 var nameInput = document.querySelector('#name-input');
 nameForm.onsubmit = function(e) {
@@ -106,8 +102,7 @@ function initialiseState(reg) {
       // set up a message channel to communicate with the SW
       var channel = new MessageChannel();
       channel.port1.onmessage = function(e) {
-        alert('hello from SW');
-        //showChannelMessage(e.data);
+        alert(e.data);
       }
       
       mySW = reg.active;
@@ -214,8 +209,8 @@ function updateStatus(endpoint,statusType) {
     }
     sendInput.setAttribute('type','text');
     // Append them to the document
-    controlsBlock.appendChild(sendBtn);
-    controlsBlock.appendChild(sendInput);
+    document.body.appendChild(sendBtn);
+    document.body.appendChild(sendInput);
 
     // Create a new XHR and send an array to the server containing
     // the type of the request, the name of the user subscribing, 
@@ -238,8 +233,8 @@ function updateStatus(endpoint,statusType) {
     // If we are unsubscribing from push
 
     // Remove the UI elements we added when we subscribed
-    controlsBlock.removeChild(sendBtn);
-    controlsBlock.removeChild(sendInput);
+    document.body.removeChild(sendBtn);
+    document.body.removeChild(sendInput);
     
     // Create a new XHR and send an array to the server containing
     // the type of the request, the name of the user unsubscribing, 
@@ -271,25 +266,9 @@ function updateStatus(endpoint,statusType) {
     sendInput.setAttribute('type','text');
     
     // Append them to the body
-    controlsBlock.appendChild(sendBtn);
-    controlsBlock.appendChild(sendInput);
+    document.body.appendChild(sendBtn);
+    document.body.appendChild(sendInput);
 
 
-  }
-}
-
-function showChannelMessage(data) {
-  if(data[0] === 'subscribe') {
-    var listItem = document.createElement('li');
-    listItem.textContent = data[1];
-    subscribersList.appendChild(listItem);
-  } else if(data[0] === 'unsubscribe') {
-    for(i = 0; i < subscribersList.children.length; i++) {
-      if(subscribersList.children[i].textContent === data[1]) {
-        subscribersList.children[i].parentNode.removeChild(subscribersList.children[i]);
-      }
-    }
-  } else {
-    alert(data);
   }
 }

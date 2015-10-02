@@ -51,10 +51,7 @@ https.createServer(options, function (request, response) {
                 });
               });
 
-              var pushData = 'subscribe,' + subscriber[1];
-              console.log('pushData: ' + pushData);
-
-              pushRequest.write(pushData);
+              pushRequest.write(subscriber[1]);
               pushRequest.end();
               
               pushRequest.on('error', function(e) {
@@ -95,10 +92,7 @@ https.createServer(options, function (request, response) {
                 });
               });
 
-              var pushData = 'unsubscribe,' + subscriber[1];
-              console.log('pushData: ' + pushData);
-
-              unsubscribeRequest.write(pushData);
+              unsubscribeRequest.write(subscriber[1]);
               unsubscribeRequest.end();
               
               unsubscribeRequest.on('error', function(e) {
