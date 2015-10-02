@@ -283,7 +283,7 @@ function showChannelMessage(data) {
     listItem.textContent = data[1];
     subscribersList.appendChild(listItem);
   } else if(data[0] === 'unsubscribe') {
-    for(i = 0, i < subscribersList.children.length, i++ ) {
+    for(i = 0; i < subscribersList.children.length; i++) {
       if(subscribersList.children[i].textContent === data[1]) {
         subscribersList.children[i].parentNode.removeChild(subscribersList.children[i]);
       }
