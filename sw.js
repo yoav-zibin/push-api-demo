@@ -2,7 +2,7 @@ var port;
 
 self.addEventListener('push', function(event) {
   var messageData = event.data.split(','); 
-  port.postMessage(messageData);
+  port.postMessage('hello');
 
   if(messageData[0] === 'subscribe') {
 
