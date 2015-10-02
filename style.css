@@ -1,3 +1,5 @@
+/* General styling */
+
 html {
 	background: #ccc;
 }
@@ -5,9 +7,10 @@ html {
 body {
 	background: white;
 	width: 50%;
-	min-width: 480px;
+	min-width: 800px;
 	margin: 0 auto;
 	padding: 20px;
+	min-height: 500px;
 }
 
 h1 {
@@ -16,4 +19,18 @@ h1 {
 
 input[type="text"] {
 	margin-left: 1em;
+}
+
+/* Subscribers list styling */
+
+.subscribers {
+	float: right;
+	width: 30%;
+}
+
+/* Messages list styling */
+
+.messages {
+	float: left;
+	width: 70%;
 }

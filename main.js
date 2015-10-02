@@ -5,6 +5,10 @@ var subBtn = document.querySelector('.subscribe');
 var sendBtn;
 var sendInput;
 
+var controlsBlock = document.querySelector('.controls');
+var subscribersList = document.querySelector('.subscribers ul');
+var messagesList = document.querySelector('.messages ul');
+
 var nameForm = document.querySelector('#form');
 var nameInput = document.querySelector('#name-input');
 nameForm.onsubmit = function(e) {
@@ -102,11 +106,10 @@ function initialiseState(reg) {
       // set up a message channel to communicate with the SW
       var channel = new MessageChannel();
       channel.port1.onmessage = function(e) {
-        alert(e.data);
+        showChannelMessage(e.data);
       }
-
+      
       mySW = reg.active;
-      console.log(mySW); // check it exists.
       mySW.postMessage('hello', [channel.port2]);
   });  
 }
@@ -195,21 +198,27 @@ function unsubscribe() {
 }
 
 function updateStatus(endpoint,statusType) {
+  // If we are subscribing to push
   if(statusType === 'subscribe') {
     console.log(endpoint);
-  
+    
+    // Create the input and button to allow sending messages
     sendBtn = document.createElement('button');
     sendInput = document.createElement('input');
 
     sendBtn.textContent = 'Send Chat Message';
+    // This stuff doesn't currently work
     sendBtn.onclick = function() {
       alert('Messaging not yet implemented, as PushMessageData not yet supported.');
     }
     sendInput.setAttribute('type','text');
+    // Append them to the document
+    controlsBlock.appendChild(sendBtn);
+    controlsBlock.appendChild(sendInput);
 
-    document.body.appendChild(sendBtn);
-    document.body.appendChild(sendInput);
-
+    // Create a new XHR and send an array to the server containing
+    // the type of the request, the name of the user subscribing, 
+    // and the push subscription endpoint the server needs to send push messages
     var request = new XMLHttpRequest();
 
     request.open('POST', 'https://127.0.0.1:7000', true);
@@ -223,13 +232,17 @@ function updateStatus(endpoint,statusType) {
     console.log(subscribeObj);
     request.send(subscribeObj);
 
-    // sendBtn.addEventListener('click',function() {
 
-    // });
   } else if(statusType === 'unsubscribe') {
-    document.body.removeChild(sendBtn);
-    document.body.removeChild(sendInput);
+    // If we are unsubscribing from push
 
+    // Remove the UI elements we added when we subscribed
+    controlsBlock.removeChild(sendBtn);
+    controlsBlock.removeChild(sendInput);
+    
+    // Create a new XHR and send an array to the server containing
+    // the type of the request, the name of the user unsubscribing, 
+    // and the associated push subscription 
     var request = new XMLHttpRequest();
 
     request.open('POST', 'https://127.0.0.1:7000', true);
@@ -244,6 +257,9 @@ function updateStatus(endpoint,statusType) {
     request.send(subscribeObj);
 
   } else if(statusType === 'init') {
+    // If we are currently just initialising the app
+
+    // Create the UI elements as required
     sendBtn = document.createElement('button');
     sendInput = document.createElement('input');
 
@@ -252,10 +268,25 @@ function updateStatus(endpoint,statusType) {
       alert('Messaging not yet implemented, as PushMessageData not yet supported.');
     }
     sendInput.setAttribute('type','text');
+    
+    // Append them to the body
+    controlsBlock.appendChild(sendBtn);
+    controlsBlock.appendChild(sendInput);
 
-    document.body.appendChild(sendBtn);
-    document.body.appendChild(sendInput);
 
+  }
+}
 
+function showChannelMessage(data) {
+  if(data[0] === 'subscribe') {
+    var listItem = document.createElement('li');
+    listItem.textContent = data[1];
+    subscribersList.appendChild(listItem);
+  } else if(data[0] === 'unsubscribe') {
+    for(i = 0, i < subscribersList.children.length, i++ ) {
+      if(subscribersList.children[i].textContent === data[1]) {
+        subscribersList.children[i].parentNode.removeChild(subscribersList.children[i]);
+      }
+    }
   }
 }
