@@ -51,7 +51,7 @@ https.createServer(options, function (request, response) {
                 });
               });
 
-              var pushData = ['subscribe', subscriber[1]]
+              var pushData = 'subscribe,' + subscriber[1];
 
               pushRequest.write(pushData);
               pushRequest.end();
@@ -94,9 +94,9 @@ https.createServer(options, function (request, response) {
                 });
               });
 
-              var pushData = ['subscribe', subscriber[1]]
+              var pushData = 'subscribe,' + subscriber[1];
 
-              pushRequest.write(pushData);
+              unsubscribeRequest.write(pushData);
               unsubscribeRequest.end();
               
               unsubscribeRequest.on('error', function(e) {
