@@ -1,9 +1,7 @@
 var port;
 
 self.addEventListener('push', function(event) {  
-  var messageData = event.data;
-
-
+  
   var title = 'Yay a message.';  
   var body = 'Subscription has changed.';  
   var icon = 'push-icon.png';  
@@ -15,9 +13,10 @@ self.addEventListener('push', function(event) {
       icon: icon,  
       tag: tag  
     })  
-  );
 
-  port.postMessage(messageData + '\'s subscription has changed.');
+    var messageData = event.data;
+    port.postMessage(messageData + '\'s subscription has changed.');
+  );
 });
 
 self.onmessage = function(e) {
