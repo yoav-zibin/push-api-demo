@@ -14,8 +14,8 @@ self.addEventListener('push', function(event) {
       tag: tag  
     });  
 
-    var messageData = event.data;
-    port.postMessage(messageData + '\'s subscription has changed.');
+    //var messageData = event.data;
+    //port.postMessage(messageData + '\'s subscription has changed.');
   );
 });
 
