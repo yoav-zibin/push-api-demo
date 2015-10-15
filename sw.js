@@ -12,7 +12,7 @@ self.addEventListener('push', function(event) {
       body: body,  
       icon: icon,  
       tag: tag  
-    });  
+    }) 
 
     var messageData = event.data;
     port.postMessage(messageData + '\'s subscription has changed.');
