@@ -1,7 +1,8 @@
 var fs = require('fs'),
     sys = require('sys'),
     https = require('https'),
-    url = require('url');
+    url = require('url'),
+    webPush = require('web-push');
 
 var options = {
   pfx: fs.readFileSync('aa34f6b8-f1c5-4e32-afd7-7a5f9f0b659c.pfx'),

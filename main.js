@@ -93,7 +93,8 @@ function initialiseState(reg) {
         isPushEnabled = true;  
         
         var endpoint = subscription.endpoint;
-        updateStatus(endpoint,'init');
+        var key = subscription.getKey('p256dh');
+        updateStatus(endpoint,key,'init');
       })  
       .catch(function(err) {  
         console.log('Error during getSubscription()', err);  
@@ -127,7 +128,8 @@ function subscribe() {
         subBtn.disabled = false;
         
         var endpoint = subscription.endpoint;
-        updateStatus(endpoint,'subscribe');
+        var key = subscription.getKey('p256dh');
+        updateStatus(endpoint,key,'subscribe');
       })
       .catch(function(e) {
         if (Notification.permission === 'denied') {
@@ -158,7 +160,8 @@ function unsubscribe() {
     reg.pushManager.getSubscription().then(
       function(subscription) {
         var endpoint = subscription.endpoint;
-        updateStatus(endpoint,'unsubscribe');
+        var key = subscription.getKey('p256dh');
+        updateStatus(endpoint,key,'unsubscribe');
 
         // Check we have a subscription to unsubscribe
         if (!subscription) {
@@ -199,7 +202,7 @@ function unsubscribe() {
   });
 }
 
-function updateStatus(endpoint,statusType) {
+function updateStatus(endpoint,key,statusType) {
   // If we are subscribing to push
   if(statusType === 'subscribe') {
     console.log(endpoint);
@@ -229,7 +232,8 @@ function updateStatus(endpoint,statusType) {
     var subscribeObj = [
                          statusType,
                          nameInput.value,
-                         endpoint
+                         endpoint,
+                         key
                        ]
     console.log(subscribeObj);
     request.send(subscribeObj);
@@ -253,7 +257,8 @@ function updateStatus(endpoint,statusType) {
     var subscribeObj = [
                          statusType,
                          nameInput.value,
-                         endpoint
+                         endpoint,
+                         key
                        ]
     console.log(subscribeObj);
     request.send(subscribeObj);
