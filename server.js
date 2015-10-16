@@ -29,7 +29,7 @@ https.createServer(options, function (request, response) {
             var array = string.split('\n');
             for(i = 0; i < (array.length-1); i++) {
               var subscriber = array[i].split(',');
-              webPush.sendNotification(subscriber[2],obj.key, JSON.stringify({
+              webPush.sendNotification(subscriber[2], 200, obj.key, JSON.stringify({
                 action: 'subscribed',
                 name: subscriber[1]
               }));
@@ -47,7 +47,7 @@ https.createServer(options, function (request, response) {
               var subscriber = array[i].split(',');
               console.log('Unsubscribe: ' + subscriber[1]);
 
-              webPush.sendNotification(subscriber[2],obj.key, JSON.stringify({
+              webPush.sendNotification(subscriber[2], 200, obj.key, JSON.stringify({
                 action: 'unsubscribed',
                 name: subscriber[1]
               }));
