@@ -18,7 +18,7 @@ https.createServer(options, function (request, response) {
     request.on('end', function() {
       if (!body) return;
       var obj = JSON.parse(body);
-      var bodyArray = [obj.statusType, obj.name, obj.endpoint,obj.key];
+      var bodyArray = [obj.statusType, obj.name, obj.endpoint];
       console.log('POSTed: ' + obj.statusType);
 
       if(obj.statusType === 'subscribe') {
@@ -29,8 +29,8 @@ https.createServer(options, function (request, response) {
             var array = string.split('\n');
             for(i = 0; i < (array.length-1); i++) {
               var subscriber = array[i].split(',');
-              webPush.sendNotification(subscriber[2],subscriber[3], JSON.stringify({
-                action: subscribed,
+              webPush.sendNotification(subscriber[2],obj.key, JSON.stringify({
+                action: 'subscribed',
                 name: subscriber[1]
               }));
             };
@@ -47,8 +47,8 @@ https.createServer(options, function (request, response) {
               var subscriber = array[i].split(',');
               console.log('Unsubscribe: ' + subscriber[1]);
 
-              webPush.sendNotification(subscriber[2],subscriber[3], JSON.stringify({
-                action: unsubscribed,
+              webPush.sendNotification(subscriber[2],obj.key, JSON.stringify({
+                action: 'unsubscribed',
                 name: subscriber[1]
               }));
 
