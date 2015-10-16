@@ -205,7 +205,8 @@ function unsubscribe() {
 function updateStatus(endpoint,key,statusType) {
   // If we are subscribing to push
   if(statusType === 'subscribe') {
-    console.log(endpoint);
+    console.log('Endpoint is ' + endpoint);
+    console.log('Key is ' + key);
     
     // Create the input and button to allow sending messages
     sendBtn = document.createElement('button');
