@@ -17,10 +17,11 @@ https.createServer(options, function (request, response) {
     })
 
     request.on('end', function() {
-      var bodyArray = body.split(',');
-      console.log('POSTed: ' + bodyArray[0]);
+      var obj = JSON.parse(body);
+      var bodyArray = [obj.statusType, obj.name, obj.endpoint,obj.key];
+      console.log('POSTed: ' + obj.statusType);
 
-      if(bodyArray[0] === 'subscribe') {
+      if(obj.statusType === 'subscribe') {
         fs.appendFile('endpoint.txt', bodyArray + '\n', function (err) {
           if (err) throw err;
           fs.readFile("endpoint.txt", function (err, buffer) {
@@ -62,7 +63,7 @@ https.createServer(options, function (request, response) {
           });
 
         });
-      } else if(bodyArray[0] === 'unsubscribe') {
+      } else if(obj.statusType === 'unsubscribe') {
           fs.readFile("endpoint.txt", function (err, buffer) {
             var newString = '';
             var string = buffer.toString();
@@ -107,7 +108,7 @@ https.createServer(options, function (request, response) {
                 console.error(e);
               });
 
-              if(bodyArray[2] === subscriber[2]) {
+              if(obj.endpoint === subscriber[2]) {
                 console.log('subscriber found.');
               } else {
                 newString += array[i] + '\n';

@@ -227,17 +227,17 @@ function updateStatus(endpoint,key,statusType) {
     // and the push subscription endpoint the server needs to send push messages
     var request = new XMLHttpRequest();
 
-    request.open('POST', 'https://127.0.0.1:7000', true);
+    request.open('POST', 'https://127.0.0.1:7000');
     request.setRequestHeader('Content-Type', 'application/json');
     
-    var subscribeObj = [
-                         statusType,
-                         nameInput.value,
-                         endpoint,
-                         key
-                       ]
+    var subscribeObj = {
+                         statusType: statusType,
+                         name: nameInput.value,
+                         endpoint: endpoint,
+                         key: key
+                       }
     console.log(subscribeObj);
-    request.send(subscribeObj);
+    request.send(JSON.stringify(subscribeObj));
 
 
   } else if(statusType === 'unsubscribe') {
@@ -252,17 +252,17 @@ function updateStatus(endpoint,key,statusType) {
     // and the associated push subscription 
     var request = new XMLHttpRequest();
 
-    request.open('POST', 'https://127.0.0.1:7000', true);
+    request.open('POST', 'https://127.0.0.1:7000');
     request.setRequestHeader('Content-Type', 'application/json');
     
-    var subscribeObj = [
-                         statusType,
-                         nameInput.value,
-                         endpoint,
-                         key
-                       ]
+    var subscribeObj = {
+                         statusType: statusType,
+                         name: nameInput.value,
+                         endpoint: endpoint,
+                         key: key
+                       }
     console.log(subscribeObj);
-    request.send(subscribeObj);
+    request.send(JSON.stringify(subscribeObj));
 
   } else if(statusType === 'init') {
     // If we are currently just initialising the app
