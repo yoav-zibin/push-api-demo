@@ -17,6 +17,7 @@ https.createServer(options, function (request, response) {
     })
 
     request.on('end', function() {
+      if (!body) return;
       var obj = JSON.parse(body);
       var bodyArray = [obj.statusType, obj.name, obj.endpoint,obj.key];
       console.log('POSTed: ' + obj.statusType);
