@@ -1,1 +1,0 @@
-subscribe,Bob,https://updates.push.services.mozilla.com/push/gAAAAABWISLn_6SPn8zm57YVmSPivyE-EQO9YMXzexpSS6Ry7HNPw_AWffHNHJiKvb-AZ9yYUShOE-b8wyr5JUr3pbr5TXQJMsgH9ZQkVijG4puwCW9opVLllmCYxoDTqwnBeaxpqZg2aF7SMBqUfI3hBhpNjSMIxI4HZUjsHztVzaFE6wRPRtc=,[object ArrayBuffer]

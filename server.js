@@ -1,5 +1,4 @@
 var fs = require('fs'),
-    sys = require('sys'),
     https = require('https'),
     url = require('url'),
     webPush = require('web-push');
@@ -30,39 +29,12 @@ https.createServer(options, function (request, response) {
             var array = string.split('\n');
             for(i = 0; i < (array.length-1); i++) {
               var subscriber = array[i].split(',');
-              console.log(subscriber[2]);
-              URLParts = url.parse(subscriber[2]);
-
-              // send request to each push endpoint telling them the new subscriber
-              // has subscribed, along with subscribe token so SW knows how to deal with it.
-              var options = {
-                hostname: URLParts.hostname,
-                path: URLParts.pathname,
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'plain/text',
-                  'Authorization': 'key=AIzaSyBN3u3TLPD-IMVB-GdE798tuinHWdQ3H1Y'
-                }
-              };
-
-              var pushRequest = https.request(options, function(pushResponse) {
-                console.log("statusCode: ", pushResponse.statusCode);
-                console.log("headers: ", pushResponse.headers);               
-
-                pushResponse.on('data', function(d) {
-                  console.log('I got a response');
-                });
-              });
-
-              pushRequest.write(subscriber[1]);
-              pushRequest.end();
-              
-              pushRequest.on('error', function(e) {
-                console.error(e);
-              });
+              webPush.sendNotification(subscriber[2],subscriber[3], JSON.stringify({
+                action: subscribed,
+                name: subscriber[1]
+              }));
             };
           });
-
         });
       } else if(obj.statusType === 'unsubscribe') {
           fs.readFile("endpoint.txt", function (err, buffer) {
@@ -73,41 +45,12 @@ https.createServer(options, function (request, response) {
             console.log('My array is: ' + array);
             for(i = 0; i < (array.length-1); i++) {
               var subscriber = array[i].split(',');
-              
               console.log('Unsubscribe: ' + subscriber[1]);
-              console.log(subscriber[2]);
 
-              URLParts = url.parse(subscriber[2]);
-
-
-
-              // send request to each push endpoint telling them the subscriber
-              // has unsubscribed.
-              var options = {
-                hostname: URLParts.hostname,
-                path: URLParts.pathname,
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'plain/text',
-                  'Authorization': 'key=AIzaSyBN3u3TLPD-IMVB-GdE798tuinHWdQ3H1Y'
-                }
-              };
-
-              var pushRequest = https.request(options, function(pushResponse) {
-                console.log("Unsubscribe statusCode: ", pushResponse.statusCode);
-                console.log("Unsubscribe headers: ", pushResponse.headers);               
-
-                pushResponse.on('data', function(d) {
-                  console.log('I got an unsubscribe response');
-                });
-              });
-
-              pushRequest.write(subscriber[1]);
-              pushRequest.end();
-              
-              pushRequest.on('error', function(e) {
-                console.error(e);
-              });
+              webPush.sendNotification(subscriber[2],subscriber[3], JSON.stringify({
+                action: unsubscribed,
+                name: subscriber[1]
+              }));
 
               if(obj.endpoint === subscriber[2]) {
                 console.log('subscriber found.');

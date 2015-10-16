@@ -1,9 +1,10 @@
 var port;
 
 self.addEventListener('push', function(event) {  
+  var obj = JSON.parse(event.data);
   
-  var title = 'Yay a message.';  
-  var body = 'Subscription has changed.';  
+  var title = 'Subscription change';  
+  var body = obj.name + ' has ' + obj.action + '.';  
   var icon = 'push-icon.png';  
   var tag = 'push';
  
@@ -13,8 +14,7 @@ self.addEventListener('push', function(event) {
     tag: tag  
   });
   
-  var messageData = event.data;
-  port.postMessage(messageData + '\'s subscription has changed.');
+  port.postMessage(obj.name + ' has ' + obj.action + '.');
   
 });
 
