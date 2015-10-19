@@ -32,6 +32,7 @@ To get it running:
 4. Install Marco Castelluccio's [web-push library](https://github.com/marco-c/web-push) using the command `npm install web-push`.
 5. Load the [sample app](https://chrisdavidmills.github.io/push-api-demo/) in Firefox Nightly. Note that it needs to run under HTTPS, as Service workers will only run in a secure context.
 6. in your terminal/command line, navigate to the directory that you cloned this repo into, and run the command `node server` to start the same server running. This server is HTTPS, and runs at `127.0.0.1:7000`.
+7. Before using the demo functionality, navigate to [https://127.0.0.1:7000](https://127.0.0.1:7000) and accept the unknown SSL certificate mentioned.
 7. Go back to the sample app and play with the subscribe/unsubscribe functionality and sending of chat messages. Monitor the browser console and terminal window (that the server is running in) to see what is happening. You will also see user information being written into, and removed from, the [endpoint.txt](https://github.com/chrisdavidmills/push-api-demo/blob/gh-pages/endpoint.txt) file as subscribe/unsubscribe commands are issued.
 
 Note: Some of the client-side code in this demo is heavily influenced by Matt Gaunt's excellent examples in [Push Notifications on the Open Web](http://updates.html5rocks.com/2015/03/push-notificatons-on-the-open-web). Thanks for the awesome work Matt!
