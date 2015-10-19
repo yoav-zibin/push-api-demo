@@ -15,7 +15,7 @@ At the moment this demo only works on [Firefox Nightly](https://nightly.mozilla.
 
 See [Using the Push API](https://developer.mozilla.org/en-US/docs/Web/API/Push_API/Using_the_Push_API) for more details about how this works.
 
-## Still to do:
+## Still to do
 
 * Hosting the server somewhere on t'internet so it can be accessed by multiple users (a chatroom is pretty useless with only one user!)
 * Improving the Node server so that it will handle the push messages, AND serve the static files. This is needed for it to start working on Chrome (and Chrome doesn't yet support the PushMessageData either.)
