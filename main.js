@@ -356,6 +356,6 @@ function sendChatMessage(chatMsg) {
                         }
       console.log(messageObj);
       request.send(JSON.stringify(messageObj));
-    )}
-  )};
+    })
+  })
 }
