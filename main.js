@@ -286,12 +286,29 @@ function updateStatus(endpoint,key,statusType) {
     controlsBlock.appendChild(sendBtn);
     controlsBlock.appendChild(sendInput);
 
+    // Create a new XHR and send an array to the server containing
+    // the type of the request, the name of the user unsubscribing, 
+    // and the associated push subscription 
+    var request = new XMLHttpRequest();
+
+    request.open('POST', 'https://127.0.0.1:7000');
+    request.setRequestHeader('Content-Type', 'application/json');
+    
+    var subscribeObj = {
+                         statusType: statusType,
+                         name: nameInput.value,
+                         endpoint: endpoint,
+                         key: btoa(String.fromCharCode.apply(null, new Uint8Array(key)))
+                       }
+    console.log(subscribeObj);
+    request.send(JSON.stringify(subscribeObj));
+
 
   }
 }
 
 function handleChannelMessage(data) {
-  if(data.action === 'subscribe') {
+  if(data.action === 'subscribe' || data.action === 'init') {
     var listItem = document.createElement('li');
     listItem.textContent = data.name;
     subscribersList.appendChild(listItem);
