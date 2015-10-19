@@ -6,9 +6,9 @@ self.addEventListener('push', function(event) {
   if(obj.action === 'subscribe' || obj.action === 'unsubscribe') {
     fireNotification(obj);
     port.postMessage(obj);
-  } else if(obj.action === 'init') {
+  } else if(obj.action === 'init' || obj.action === 'chatMsg') {
     port.postMessage(obj);
-  }
+  } 
 });
 
 self.onmessage = function(e) {

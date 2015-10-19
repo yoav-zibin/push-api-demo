@@ -258,7 +258,7 @@ function updateStatus(endpoint,key,statusType) {
     controlsBlock.removeChild(sendBtn);
     controlsBlock.removeChild(sendInput);
     
-    // Create a new XHR and send an array to the server containing
+    // Create a new XHR and send an object to the server containing
     // the type of the request, the name of the user unsubscribing, 
     // and the associated push subscription 
     var request = new XMLHttpRequest();
@@ -276,7 +276,7 @@ function updateStatus(endpoint,key,statusType) {
     request.send(JSON.stringify(subscribeObj));
 
   } else if(statusType === 'init') {
-    // If we are currently just initialising the app
+    // If we are just initialising the app once (re)loaded
 
     // Create the UI elements as required
     sendBtn = document.createElement('button');
@@ -295,7 +295,7 @@ function updateStatus(endpoint,key,statusType) {
       sendChatMessage(sendInput.value);
     }
 
-    // Create a new XHR and send an array to the server containing
+    // Create a new XHR and send an object to the server containing
     // the type of the request, the name of the user unsubscribing, 
     // and the associated push subscription 
     var request = new XMLHttpRequest();
@@ -327,11 +327,28 @@ function handleChannelMessage(data) {
         subscribersList.children[i].parentNode.removeChild(subscribersList.children[i]);
       }
     }
-  } else {
-    alert(data);
+  } else if(data.action === 'chatMsg') {
+    var listItem = document.createElement('li');
+    listItem.textContent = data.name;
+    messagesList.appendChild(listItem);
   }
 }
 
 function sendChatMessage(chatMsg) {
-  alert(chatMsg);
+  // Create a new XHR and send an object to the server containing
+  // the type of the request, the name of the user unsubscribing, 
+  // and the associated push subscription 
+  var request = new XMLHttpRequest();
+
+  request.open('POST', 'https://127.0.0.1:7000');
+  request.setRequestHeader('Content-Type', 'application/json');
+    
+  var messageObj = {
+                      statusType: 'chatMsg',
+                      name: chatMsg,
+                      endpoint: endpoint,
+                      key: btoa(String.fromCharCode.apply(null, new Uint8Array(key)))
+                    }
+  console.log(messageObj);
+  request.send(JSON.stringify(messageObj));
 }

@@ -21,18 +21,30 @@ https.createServer(options, function (request, response) {
       var bodyArray = [obj.statusType, obj.name, obj.endpoint];
       console.log('POSTed: ' + obj.statusType);
 
-      if(obj.statusType === 'init') {
+      if(obj.statusType === 'chatMsg') {
         fs.readFile("endpoint.txt", function (err, buffer) {
-            var string = buffer.toString();
-            var array = string.split('\n');
-            for(i = 0; i < (array.length-1); i++) {
-              var subscriber = array[i].split(',');
-              webPush.sendNotification(subscriber[2], 200, obj.key, JSON.stringify({
-                action: 'init',
-                name: subscriber[1]
-              }));
-            };
-          });
+          var string = buffer.toString();
+          var array = string.split('\n');
+          for(i = 0; i < (array.length-1); i++) {
+            var subscriber = array[i].split(',');
+            webPush.sendNotification(subscriber[2], 200, obj.key, JSON.stringify({
+              action: 'chatMsg',
+              name: obj.name
+            }));
+          };
+        });
+      } else if(obj.statusType === 'init') {
+        fs.readFile("endpoint.txt", function (err, buffer) {
+          var string = buffer.toString();
+          var array = string.split('\n');
+          for(i = 0; i < (array.length-1); i++) {
+            var subscriber = array[i].split(',');
+            webPush.sendNotification(subscriber[2], 200, obj.key, JSON.stringify({
+              action: 'init',
+              name: subscriber[1]
+            }));
+          };
+        });
 
       } else if(obj.statusType === 'subscribe') {
         fs.appendFile('endpoint.txt', bodyArray + '\n', function (err) {
