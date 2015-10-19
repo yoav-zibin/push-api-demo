@@ -4,7 +4,7 @@ self.addEventListener('push', function(event) {
   var obj = event.data.json();
 
   if(obj.action === 'subscribe' || obj.action === 'unsubscribe') {
-    fireNotification(obj);
+    fireNotification(obj, event);
     port.postMessage(obj);
   } else if(obj.action === 'init' || obj.action === 'chatMsg') {
     port.postMessage(obj);
@@ -15,15 +15,15 @@ self.onmessage = function(e) {
   port = e.ports[0];
 }
 
-function fireNotification(obj) {
+function fireNotification(obj, event) {
   var title = 'Subscription change';  
   var body = obj.name + ' has ' + obj.action + 'd.'; 
   var icon = 'push-icon.png';  
   var tag = 'push';
    
-  self.registration.showNotification(title, {  
+  event.waitUntil(self.registration.showNotification(title, {
     body: body,  
     icon: icon,  
     tag: tag  
-  });
+  }));
 }
