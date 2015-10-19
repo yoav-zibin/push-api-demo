@@ -335,20 +335,27 @@ function handleChannelMessage(data) {
 }
 
 function sendChatMessage(chatMsg) {
-  // Create a new XHR and send an object to the server containing
-  // the type of the request, the name of the user unsubscribing, 
-  // and the associated push subscription 
-  var request = new XMLHttpRequest();
+  navigator.serviceWorker.ready.then(function(reg) {  
+    // Find push message subscription, then retrieve it
+    reg.pushManager.getSubscription().then(function(subscription) {
+      var endpoint = subscription.endpoint;
+      var key = subscription.getKey('p256dh');
+      // Create a new XHR and send an object to the server containing
+      // the type of the request, the name of the user unsubscribing, 
+      // and the associated push subscription 
+      var request = new XMLHttpRequest();
 
-  request.open('POST', 'https://127.0.0.1:7000');
-  request.setRequestHeader('Content-Type', 'application/json');
+      request.open('POST', 'https://127.0.0.1:7000');
+      request.setRequestHeader('Content-Type', 'application/json');
     
-  var messageObj = {
-                      statusType: 'chatMsg',
-                      name: chatMsg,
-                      endpoint: endpoint,
-                      key: btoa(String.fromCharCode.apply(null, new Uint8Array(key)))
-                    }
-  console.log(messageObj);
-  request.send(JSON.stringify(messageObj));
+      var messageObj = {
+                          statusType: 'chatMsg',
+                          name: chatMsg,
+                          endpoint: endpoint,
+                          key: btoa(String.fromCharCode.apply(null, new Uint8Array(key)))
+                        }
+      console.log(messageObj);
+      request.send(JSON.stringify(messageObj));
+    )}
+  )}
 }
