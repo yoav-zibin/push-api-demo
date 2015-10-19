@@ -329,12 +329,12 @@ function handleChannelMessage(data) {
         subscribersList.children[i].parentNode.removeChild(subscribersList.children[i]);
       }
     }
-
     nameInput.disabled = false;
   } else if(data.action === 'chatMsg') {
     var listItem = document.createElement('li');
     listItem.textContent = data.name + ": " + data.msg;
     messagesList.appendChild(listItem);
+    sendInput.value = '';
   }
 }
 
