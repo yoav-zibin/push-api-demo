@@ -32,6 +32,10 @@ form + button {
 	width: 30%;
 }
 
+.subscribers li {
+	padding-bottom: 5px;
+}
+
 /* Messages list styling */
 
 .messages {

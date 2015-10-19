@@ -321,12 +321,16 @@ function handleChannelMessage(data) {
     var listItem = document.createElement('li');
     listItem.textContent = data.name;
     subscribersList.appendChild(listItem);
+    nameInput.value = data.name;
+    nameInput.disabled = true;
   } else if(data.action === 'unsubscribe') {
     for(i = 0; i < subscribersList.children.length; i++) {
       if(subscribersList.children[i].textContent === data.name) {
         subscribersList.children[i].parentNode.removeChild(subscribersList.children[i]);
       }
     }
+
+    nameInput.disabled = false;
   } else if(data.action === 'chatMsg') {
     var listItem = document.createElement('li');
     listItem.textContent = data.name + ": " + data.msg;
