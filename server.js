@@ -30,7 +30,7 @@ https.createServer(options, function (request, response) {
             for(i = 0; i < (array.length-1); i++) {
               var subscriber = array[i].split(',');
               webPush.sendNotification(subscriber[2], 200, obj.key, JSON.stringify({
-                action: 'subscribed',
+                action: 'subscribe',
                 name: subscriber[1]
               }));
             };
@@ -48,7 +48,7 @@ https.createServer(options, function (request, response) {
               console.log('Unsubscribe: ' + subscriber[1]);
 
               webPush.sendNotification(subscriber[2], 200, obj.key, JSON.stringify({
-                action: 'unsubscribed',
+                action: 'unsubscribe',
                 name: subscriber[1]
               }));
 

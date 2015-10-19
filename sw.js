@@ -4,7 +4,7 @@ self.addEventListener('push', function(event) {
   var obj = event.data.json();
   
   var title = 'Subscription change';  
-  var body = obj.name + ' has ' + obj.action + '.'; 
+  var body = obj.name + ' has ' + obj.action + 'd.'; 
   var icon = 'push-icon.png';  
   var tag = 'push';
  
