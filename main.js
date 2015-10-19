@@ -329,7 +329,7 @@ function handleChannelMessage(data) {
     }
   } else if(data.action === 'chatMsg') {
     var listItem = document.createElement('li');
-    listItem.textContent = data.name + ": " data.msg;
+    listItem.textContent = data.name + ": " + data.msg;
     messagesList.appendChild(listItem);
   }
 }
