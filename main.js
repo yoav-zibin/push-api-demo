@@ -329,7 +329,7 @@ function handleChannelMessage(data) {
     }
   } else if(data.action === 'chatMsg') {
     var listItem = document.createElement('li');
-    listItem.textContent = data.name;
+    listItem.textContent = data.name + ": " data.msg;
     messagesList.appendChild(listItem);
   }
 }
@@ -350,7 +350,8 @@ function sendChatMessage(chatMsg) {
     
       var messageObj = {
                           statusType: 'chatMsg',
-                          name: chatMsg,
+                          name: nameInput.value,
+                          msg: chatMsg,
                           endpoint: endpoint,
                           key: btoa(String.fromCharCode.apply(null, new Uint8Array(key)))
                         }

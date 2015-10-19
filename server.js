@@ -29,7 +29,8 @@ https.createServer(options, function (request, response) {
             var subscriber = array[i].split(',');
             webPush.sendNotification(subscriber[2], 200, obj.key, JSON.stringify({
               action: 'chatMsg',
-              name: obj.name
+              name: obj.name,
+              msg: obj.msg
             }));
           };
         });
