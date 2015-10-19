@@ -38,3 +38,11 @@ form + button {
 	float: left;
 	width: 70%;
 }
+
+.messages li {
+	padding-bottom: 5px;
+}
+
+.messages li:first-word {
+  font-weight: bold;
+}
