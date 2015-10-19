@@ -14,7 +14,7 @@ self.addEventListener('push', function(event) {
     tag: tag  
   });
   
-  port.postMessage(obj.name + ' has ' + obj.action + '.');
+  port.postMessage(obj);
 });
 
 self.onmessage = function(e) {

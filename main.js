@@ -107,7 +107,8 @@ function initialiseState(reg) {
       // set up a message channel to communicate with the SW
       var channel = new MessageChannel();
       channel.port1.onmessage = function(e) {
-        alert(e.data);
+        console.log(e.data);
+        handleChannelMessage(e.data);
       }
       
       mySW = reg.active;
@@ -286,5 +287,21 @@ function updateStatus(endpoint,key,statusType) {
     controlsBlock.appendChild(sendInput);
 
 
+  }
+}
+
+function handleChannelMessage(data) {
+  if(data.action === 'subscribe') {
+    var listItem = document.createElement('li');
+    listItem.textContent = data.name;
+    subscribersList.appendChild(listItem);
+  } else if(data.action === 'unsubscribe') {
+    for(i = 0; i < subscribersList.children.length; i++) {
+      if(subscribersList.children[i].textContent === data.name) {
+        subscribersList.children[i].parentNode.removeChild(subscribersList.children[i]);
+      }
+    }
+  } else {
+    alert(data);
   }
 }

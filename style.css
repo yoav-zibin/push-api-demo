@@ -21,6 +21,10 @@ input[type="text"] {
 	margin-left: 1em;
 }
 
+form + button {
+    margin-bottom: 15px;
+}
+
 /* Subscribers list styling */
 
 .subscribers {
