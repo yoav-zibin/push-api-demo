@@ -87,15 +87,14 @@ function initialiseState(reg) {
           // to allow the user to enable push  
           return;  
         }
-        
-        // Keep your server in sync with the latest subscriptionId
-        //sendSubscriptionToServer(subscription);
 
         // Set your UI to show they have subscribed for  
         // push messages  
         subBtn.textContent = 'Unsubscribe from Push Messaging';  
         isPushEnabled = true;  
         
+        // initialize status, which includes setting UI elements for subscribed status
+        // and updating Subscribers list via push
         var endpoint = subscription.endpoint;
         var key = subscription.getKey('p256dh');
         updateStatus(endpoint,key,'init');
@@ -132,6 +131,8 @@ function subscribe() {
         subBtn.textContent = 'Unsubscribe from Push Messaging';
         subBtn.disabled = false;
         
+        // Update status to subscribe current user on server, and to let
+        // other users know this user has subscribed
         var endpoint = subscription.endpoint;
         var key = subscription.getKey('p256dh');
         updateStatus(endpoint,key,'subscribe');
@@ -164,6 +165,9 @@ function unsubscribe() {
     // subcription object, which you can call unsubscribe() on.
     reg.pushManager.getSubscription().then(
       function(subscription) {
+
+        // Update status to unsubscribe current user from server (remove details)
+        // and let other subscribers know they have unsubscribed  
         var endpoint = subscription.endpoint;
         var key = subscription.getKey('p256dh');
         updateStatus(endpoint,key,'unsubscribe');
@@ -218,14 +222,16 @@ function updateStatus(endpoint,key,statusType) {
     sendInput = document.createElement('input');
 
     sendBtn.textContent = 'Send Chat Message';
-    // This stuff doesn't currently work
-    sendBtn.onclick = function() {
-      alert('Messaging not yet implemented, as PushMessageData not yet supported.');
-    }
     sendInput.setAttribute('type','text');
     // Append them to the document
     controlsBlock.appendChild(sendBtn);
     controlsBlock.appendChild(sendInput);
+
+    // Set up a listener so that when the Send Chat Message button is clicked,
+    // the sendChatMessage() function is fun, which handles sending the message 
+    sendBtn.onclick = function() {
+      sendChatMessage(sendInput.value);
+    }
 
     // Create a new XHR and send an array to the server containing
     // the type of the request, the name of the user subscribing, 
@@ -277,14 +283,17 @@ function updateStatus(endpoint,key,statusType) {
     sendInput = document.createElement('input');
 
     sendBtn.textContent = 'Send Chat Message';
-    sendBtn.onclick = function() {
-      alert('Messaging not yet implemented, as PushMessageData not yet supported.');
-    }
     sendInput.setAttribute('type','text');
     
     // Append them to the body
     controlsBlock.appendChild(sendBtn);
     controlsBlock.appendChild(sendInput);
+
+    // Set up a listener so that when the Send Chat Message button is clicked,
+    // the sendChatMessage() function is fun, which handles sending the message 
+    sendBtn.onclick = function() {
+      sendChatMessage(sendInput.value);
+    }
 
     // Create a new XHR and send an array to the server containing
     // the type of the request, the name of the user unsubscribing, 
@@ -321,4 +330,8 @@ function handleChannelMessage(data) {
   } else {
     alert(data);
   }
+}
+
+function sendChatMessage(chatMsg) {
+  alert(chatMsg);
 }
