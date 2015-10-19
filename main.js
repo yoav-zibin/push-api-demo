@@ -5,6 +5,10 @@ var subBtn = document.querySelector('.subscribe');
 var sendBtn;
 var sendInput;
 
+var controlsBlock = document.querySelector('.controls');
+var subscribersList = document.querySelector('.subscribers ul');
+var messagesList = document.querySelector('.messages ul');
+
 var nameForm = document.querySelector('#form');
 var nameInput = document.querySelector('#name-input');
 nameForm.onsubmit = function(e) {
@@ -219,8 +223,8 @@ function updateStatus(endpoint,key,statusType) {
     }
     sendInput.setAttribute('type','text');
     // Append them to the document
-    document.body.appendChild(sendBtn);
-    document.body.appendChild(sendInput);
+    controlsBlock.appendChild(sendBtn);
+    controlsBlock.appendChild(sendInput);
 
     // Create a new XHR and send an array to the server containing
     // the type of the request, the name of the user subscribing, 
@@ -244,8 +248,8 @@ function updateStatus(endpoint,key,statusType) {
     // If we are unsubscribing from push
 
     // Remove the UI elements we added when we subscribed
-    document.body.removeChild(sendBtn);
-    document.body.removeChild(sendInput);
+    controlsBlock.removeChild(sendBtn);
+    controlsBlock.removeChild(sendInput);
     
     // Create a new XHR and send an array to the server containing
     // the type of the request, the name of the user unsubscribing, 
@@ -278,8 +282,8 @@ function updateStatus(endpoint,key,statusType) {
     sendInput.setAttribute('type','text');
     
     // Append them to the body
-    document.body.appendChild(sendBtn);
-    document.body.appendChild(sendInput);
+    controlsBlock.appendChild(sendBtn);
+    controlsBlock.appendChild(sendInput);
 
 
   }
