@@ -259,7 +259,7 @@ function updateStatus(endpoint,key,statusType) {
                          statusType: statusType,
                          name: nameInput.value,
                          endpoint: endpoint,
-                         key: key
+                         key: btoa(String.fromCharCode.apply(null, new Uint8Array(key)))
                        }
     console.log(subscribeObj);
     request.send(JSON.stringify(subscribeObj));
