@@ -106,7 +106,6 @@ function initialiseState(reg) {
       // set up a message channel to communicate with the SW
       var channel = new MessageChannel();
       channel.port1.onmessage = function(e) {
-        console.log(e.data);
         handleChannelMessage(e.data);
       }
       
@@ -235,7 +234,8 @@ function updateStatus(endpoint,key,statusType) {
 
     // Create a new XHR and send an array to the server containing
     // the type of the request, the name of the user subscribing, 
-    // and the push subscription endpoint the server needs to send push messages
+    // and the push subscription endpoint + key the server needs
+    // to send push messages
     var request = new XMLHttpRequest();
 
     request.open('POST', 'https://127.0.0.1:7000');
@@ -260,7 +260,7 @@ function updateStatus(endpoint,key,statusType) {
     
     // Create a new XHR and send an object to the server containing
     // the type of the request, the name of the user unsubscribing, 
-    // and the associated push subscription 
+    // and the associated push endpoint/key 
     var request = new XMLHttpRequest();
 
     request.open('POST', 'https://127.0.0.1:7000');
@@ -296,8 +296,8 @@ function updateStatus(endpoint,key,statusType) {
     }
 
     // Create a new XHR and send an object to the server containing
-    // the type of the request, the name of the user unsubscribing, 
-    // and the associated push subscription 
+    // the type of the request, the name of the user initialising the app, 
+    // and the associated push endpoint/key 
     var request = new XMLHttpRequest();
 
     request.open('POST', 'https://127.0.0.1:7000');
@@ -321,8 +321,6 @@ function handleChannelMessage(data) {
     var listItem = document.createElement('li');
     listItem.textContent = data.name;
     subscribersList.appendChild(listItem);
-    nameInput.value = data.name;
-    nameInput.disabled = true;
   } else if(data.action === 'unsubscribe') {
     for(i = 0; i < subscribersList.children.length; i++) {
       if(subscribersList.children[i].textContent === data.name) {
