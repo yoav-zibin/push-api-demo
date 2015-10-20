@@ -97,6 +97,7 @@ function initialiseState(reg) {
         // and updating Subscribers list via push
         var endpoint = subscription.endpoint;
         var key = subscription.getKey('p256dh');
+        console.log(key);
         updateStatus(endpoint,key,'init');
       })  
       .catch(function(err) {  
