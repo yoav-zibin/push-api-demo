@@ -66,9 +66,7 @@ https.createServer(options, function (request, response) {
           fs.readFile("endpoint.txt", function (err, buffer) {
             var newString = '';
             var string = buffer.toString();
-            console.log('My string is: ' + string);
             var array = string.split('\n');
-            console.log('My array is: ' + array);
             for(i = 0; i < (array.length-1); i++) {
               var subscriber = array[i].split(',');
               console.log('Unsubscribe: ' + subscriber[1]);
@@ -86,7 +84,6 @@ https.createServer(options, function (request, response) {
 
               fs.writeFile('endpoint.txt', newString, function (err) {
                   if (err) throw err;
-                  console.log('Subscriber unsubscribed');
               });
             }
               
