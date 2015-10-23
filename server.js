@@ -26,6 +26,7 @@ https.createServer(options, function (request, response) {
           var string = buffer.toString();
           var array = string.split('\n');
           for(i = 0; i < (array.length-1); i++) {
+            var subscriber = array[i].split(',');
             if(obj.name === subscriber[1]) {
               response.writeHead(200, {
                 "Content-Type": "text/plain",

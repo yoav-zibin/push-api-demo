@@ -384,9 +384,13 @@ function duplicateNameCheck(name) {
                    }
 
   request.onreadystatechange = function() {
+    console.log('has the state changed?');
     if (request.readyState === XMLHttpRequest.DONE) {
+      console.log('is it done?');
       if (request.status === 200) {
+        console.log('status 200?');
         if(request.responseText === 'true') {
+          console.log('has it returned anything?');
           return true;
         } else {
           return false;
