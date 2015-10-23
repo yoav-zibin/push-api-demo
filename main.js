@@ -385,11 +385,15 @@ function duplicateNameCheck(name) {
                       endpoint: null
                    }
 
-  request.onload = function() {
-    console.log('now does this work?');
+  request.onreadystatechange = function() {
     if (request.readyState === XMLHttpRequest.DONE) {
+      console.log('is it done?');
+      console.log('Status is ' + request.status);
+      console.log('Reponse ' + request.response);
+      console.log('Reponse ' + request.responseText);
       if (request.status === 200) {
         if(request.responseText === 'true') {
+          console.log('has it returned anything?');
           dupeValue = true;
         } else {
           dupeValue = false;
