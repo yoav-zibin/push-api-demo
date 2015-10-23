@@ -8,14 +8,12 @@ var options = {
   passphrase: 'password'
 };
 
-var dupe = 'true';
-
 https.createServer(options, function (request, response) {
     var body = "";
 
     request.on('data', function(chunk) {
       body += chunk;
-    })
+    });
 
     request.on('end', function() {
       if (!body) return;
@@ -23,21 +21,7 @@ https.createServer(options, function (request, response) {
       var bodyArray = [obj.statusType, obj.name, obj.endpoint];
       console.log('POSTed: ' + obj.statusType);
       
-      if(obj.statusType === 'dupeCheck') {
-        fs.readFile("endpoint.txt", function (err, buffer) {
-          var string = buffer.toString();
-          var array = string.split('\n');
-          for(i = 0; i < (array.length-1); i++) {
-            var subscriber = array[i].split(',');
-            if(obj.name === subscriber[1]) {
-              dupe = 'true';
-              break;
-            }
-          }
-
-          dupe = 'false';
-        });
-      } else if(obj.statusType === 'chatMsg') {
+      if(obj.statusType === 'chatMsg') {
         fs.readFile("endpoint.txt", function (err, buffer) {
           var string = buffer.toString();
           var array = string.split('\n');
@@ -114,7 +98,9 @@ response.writeHead(200, {
   "Access-Control-Allow-Origin": "*", 
   "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin, Access-Control-Allow-Headers"});
 
-response.end(dupe);
+response.write('hello');
+
+response.end();
 
 }).listen(7000);
 console.log("Server Running on 7000.");   
