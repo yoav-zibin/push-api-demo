@@ -8,6 +8,8 @@ var options = {
   passphrase: 'password'
 };
 
+var dupe = 'true';
+
 https.createServer(options, function (request, response) {
     var body = "";
 
@@ -28,22 +30,12 @@ https.createServer(options, function (request, response) {
           for(i = 0; i < (array.length-1); i++) {
             var subscriber = array[i].split(',');
             if(obj.name === subscriber[1]) {
-              response.writeHead(200, {
-                "Content-Type": "text/plain",
-                "Access-Control-Allow-Origin": "*", 
-                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"});
-
-              response.end('true');
+              dupe = 'true';
               break;
             }
           }
 
-          response.writeHead(200, {
-                "Content-Type": "text/plain",
-                "Access-Control-Allow-Origin": "*", 
-                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"});
-
-          response.end('false');
+          dupe = 'false';
         });
       } else if(obj.statusType === 'chatMsg') {
         fs.readFile("endpoint.txt", function (err, buffer) {
@@ -122,7 +114,7 @@ response.writeHead(200, {
   "Access-Control-Allow-Origin": "*", 
   "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin, Access-Control-Allow-Headers"});
 
-response.end('hello');
+response.end(dupe);
 
 }).listen(7000);
 console.log("Server Running on 7000.");   

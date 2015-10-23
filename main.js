@@ -373,6 +373,7 @@ function sendChatMessage(chatMsg) {
 }
 
 function duplicateNameCheck(name) {
+  var dupeValue;
   var request = new XMLHttpRequest();
 
   request.open('POST', 'https://127.0.0.1:7000');
@@ -394,10 +395,12 @@ function duplicateNameCheck(name) {
       if (request.status === 200) {
         if(request.responseText === 'true') {
           console.log('has it returned anything?');
-          return true;
+          dupeValue = true;
         } else {
-          return false;
+          dupeValue = false;
         }
+
+        return dupeValue;
       } else {
         alert('There was a problem with the request.');
       }
