@@ -119,6 +119,7 @@ function initialiseState(reg) {
 
 function subscribe() {
   var dupe = duplicateNameCheck(nameInput.value);
+  console.log('Dupe value: ' + dupe)
 
   if(dupe) {
     alert('That username is already in use. Please choose another.');
@@ -389,6 +390,7 @@ function duplicateNameCheck(name) {
       console.log('is it done?');
       if (request.status === 200) {
         console.log('status 200?');
+        console.log('Response text is ' + request.responseText);
         if(request.responseText === 'true') {
           console.log('has it returned anything?');
           return true;
