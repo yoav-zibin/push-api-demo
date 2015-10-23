@@ -389,8 +389,6 @@ function duplicateNameCheck(name) {
     if (request.readyState === XMLHttpRequest.DONE) {
       console.log('is it done?');
       if (request.status === 200) {
-        console.log('status 200?');
-        console.log('Response text is ' + request.responseText);
         if(request.responseText === 'true') {
           console.log('has it returned anything?');
           return true;
@@ -398,6 +396,7 @@ function duplicateNameCheck(name) {
           return false;
         }
       } else {
+        console.log('Status is ' + request.status);
         alert('There was a problem with the request.');
       }
     }
