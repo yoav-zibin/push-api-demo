@@ -20,8 +20,31 @@ https.createServer(options, function (request, response) {
       var obj = JSON.parse(body);
       var bodyArray = [obj.statusType, obj.name, obj.endpoint];
       console.log('POSTed: ' + obj.statusType);
+      
+      if(obj.statusType === 'dupeCheck') {
+        fs.readFile("endpoint.txt", function (err, buffer) {
+          var string = buffer.toString();
+          var array = string.split('\n');
+          for(i = 0; i < (array.length-1); i++) {
+            if(obj.name === subscriber[1]) {
+              response.writeHead(200, {
+                "Content-Type": "text/plain",
+                "Access-Control-Allow-Origin": "*", 
+                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"});
 
-      if(obj.statusType === 'chatMsg') {
+              response.end('true');
+              break;
+            }
+          }
+
+          response.writeHead(200, {
+                "Content-Type": "text/plain",
+                "Access-Control-Allow-Origin": "*", 
+                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"});
+
+          response.end('false');
+        });
+      } else if(obj.statusType === 'chatMsg') {
         fs.readFile("endpoint.txt", function (err, buffer) {
           var string = buffer.toString();
           var array = string.split('\n');

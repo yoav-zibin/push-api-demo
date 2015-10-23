@@ -118,43 +118,50 @@ function initialiseState(reg) {
 
 
 function subscribe() {
-  // Disable the button so it can't be changed while
-  // we process the permission request
+  var dupe = duplicateNameCheck(nameInput.value);
 
-  subBtn.disabled = true;
+  if(dupe) {
+    alert('That username is already in use. Please choose another.');
+  } else {
 
-  navigator.serviceWorker.ready.then(function(reg) {
-    reg.pushManager.subscribe({userVisibleOnly: true})
-      .then(function(subscription) {
-        // The subscription was successful
-        isPushEnabled = true;
-        subBtn.textContent = 'Unsubscribe from Push Messaging';
-        subBtn.disabled = false;
-        
-        // Update status to subscribe current user on server, and to let
-        // other users know this user has subscribed
-        var endpoint = subscription.endpoint;
-        var key = subscription.getKey('p256dh');
-        updateStatus(endpoint,key,'subscribe');
-      })
-      .catch(function(e) {
-        if (Notification.permission === 'denied') {
-          // The user denied the notification permission which
-          // means we failed to subscribe and the user will need
-          // to manually change the notification permission to
-          // subscribe to push messages
-          console.log('Permission for Notifications was denied');
-          
-        } else {
-          // A problem occurred with the subscription, this can
-          // often be down to an issue or lack of the gcm_sender_id
-          // and / or gcm_user_visible_only
-          console.log('Unable to subscribe to push.', e);
+    // Disable the button so it can't be changed while
+    // we process the permission request
+
+    subBtn.disabled = true;
+
+    navigator.serviceWorker.ready.then(function(reg) {
+      reg.pushManager.subscribe({userVisibleOnly: true})
+        .then(function(subscription) {
+          // The subscription was successful
+          isPushEnabled = true;
+          subBtn.textContent = 'Unsubscribe from Push Messaging';
           subBtn.disabled = false;
-          subBtn.textContent = 'Subscribe to Push Messaging';
-        }
-      });
-  });
+          
+          // Update status to subscribe current user on server, and to let
+          // other users know this user has subscribed
+          var endpoint = subscription.endpoint;
+          var key = subscription.getKey('p256dh');
+          updateStatus(endpoint,key,'subscribe');
+        })
+        .catch(function(e) {
+          if (Notification.permission === 'denied') {
+            // The user denied the notification permission which
+            // means we failed to subscribe and the user will need
+            // to manually change the notification permission to
+            // subscribe to push messages
+            console.log('Permission for Notifications was denied');
+            
+          } else {
+            // A problem occurred with the subscription, this can
+            // often be down to an issue or lack of the gcm_sender_id
+            // and / or gcm_user_visible_only
+            console.log('Unable to subscribe to push.', e);
+            subBtn.disabled = false;
+            subBtn.textContent = 'Subscribe to Push Messaging';
+          }
+        });
+    });
+  }
 }
 
 function unsubscribe() {
@@ -362,4 +369,34 @@ function sendChatMessage(chatMsg) {
       request.send(JSON.stringify(messageObj));
     })
   })
+}
+
+function duplicateNameCheck(name) {
+  var request = new XMLHttpRequest();
+
+  request.open('POST', 'https://127.0.0.1:7000');
+  request.setRequestHeader('Content-Type', 'application/json');
+
+  var messageObj = {
+                      statusType: 'dupeCheck',
+                      name: name,
+                      endpoint: null
+                   }
+
+  request.onreadystatechange = function() {
+    if (request.readyState === XMLHttpRequest.DONE) {
+      if (request.status === 200) {
+        if(request.responseText === 'true') {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        alert('There was a problem with the request.');
+      }
+    }
+  }
+
+
+  request.send(JSON.stringify(messageObj));
 }
