@@ -8,7 +8,7 @@ var options = {
   passphrase: 'password'
 };
 
-var dupe;
+var dupe = 'true';
 
 https.createServer(options, function (request, response) {
     var body = "";
