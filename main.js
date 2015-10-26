@@ -118,6 +118,12 @@ function initialiseState(reg) {
 
 
 function subscribe() {
+  var dupe = duplicateNameCheck(nameInput.value);
+  console.log('Dupe value: ' + dupe);
+
+  if(dupe) {
+    alert('That username is already in use. Please choose another.');
+  } else {
 
     // Disable the button so it can't be changed while
     // we process the permission request
@@ -156,6 +162,7 @@ function subscribe() {
           }
         });
     });
+  }
 }
 
 function unsubscribe() {
@@ -363,4 +370,43 @@ function sendChatMessage(chatMsg) {
       request.send(JSON.stringify(messageObj));
     })
   })
+}
+
+function duplicateNameCheck(name) {
+  var dupeValue;
+  var request = new XMLHttpRequest();
+
+  request.open('POST', 'https://127.0.0.1:7000');
+  request.setRequestHeader('Content-Type', 'application/json');
+
+  var messageObj = {
+                      statusType: 'dupeCheck',
+                      name: name,
+                      endpoint: null
+                   }
+
+  request.onreadystatechange = function() {
+    if (request.readyState === XMLHttpRequest.DONE) {
+      console.log('is it done?');
+      console.log('Status is ' + request.status);
+      console.log('Reponse ' + request.response);
+      console.log('Reponse ' + request.responseText);
+      if (request.status === 200) {
+        if(request.responseText === 'true') {
+          console.log('has it returned anything?');
+          dupeValue = true;
+        } else {
+          dupeValue = false;
+        }
+
+        console.log('Dupe value inside function ' + dupeValue);
+        return dupeValue;
+      } else {
+        alert('There was a problem with the request.');
+      }
+    }
+  }
+
+
+  request.send(JSON.stringify(messageObj));
 }
