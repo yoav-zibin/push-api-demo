@@ -389,10 +389,6 @@ function duplicateNameCheck(name) {
 
     request.onreadystatechange = function() {
       if (request.readyState === XMLHttpRequest.DONE) {
-        console.log('is it done?');
-        console.log('Status is ' + request.status);
-        console.log('Reponse ' + request.response);
-        console.log('Reponse ' + request.responseText);
         if (request.status === 200) {
           if(request.responseText === 'true') {
             console.log('has it returned anything?');
@@ -400,8 +396,6 @@ function duplicateNameCheck(name) {
           } else {
             resolve(dupeValue = false);
           }
-
-          console.log('Dupe value inside function ' + dupeValue);
         } else {
           reject(Error('There was a problem with the request.'));
         }
