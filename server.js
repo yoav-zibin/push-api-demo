@@ -23,24 +23,26 @@ https.createServer(options, function (request, response) {
       var bodyArray = [obj.statusType, obj.name, obj.endpoint];
       console.log('POSTed: ' + obj.statusType);
       
-      if(obj.statusType === 'dupeCheck') {
-        fs.readFile("endpoint.txt", function (err, buffer) {
-          var string = buffer.toString();
-          var array = string.split('\n');
-          for(i = 0; i < (array.length-1); i++) {
-            var subscriber = array[i].split(',');
-            console.log(subscriber[1]);
-            console.log(obj.name);
-            if(obj.name === subscriber[1]) {
-              console.log('dupe check true');
-              dupe = 'true';
-            } else {
-              console.log('dupe check false');
-              dupe = 'false';
-            }
-          }
-        });
-      } else if(obj.statusType === 'chatMsg') {
+      // if(obj.statusType === 'dupeCheck') {
+      //   fs.readFile("endpoint.txt", function (err, buffer) {
+      //     var string = buffer.toString();
+      //     var array = string.split('\n');
+      //     for(i = 0; i < (array.length-1); i++) {
+      //       var subscriber = array[i].split(',');
+      //       console.log(subscriber[1]);
+      //       console.log(obj.name);
+      //       if(obj.name === subscriber[1]) {
+      //         console.log('dupe check true');
+      //         dupe = 'true';
+      //       } else {
+      //         console.log('dupe check false');
+      //         dupe = 'false';
+      //       }
+      //     }
+      //   });
+      // } else
+
+      if(obj.statusType === 'chatMsg') {
         fs.readFile("endpoint.txt", function (err, buffer) {
           var string = buffer.toString();
           var array = string.split('\n');
