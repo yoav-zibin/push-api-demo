@@ -118,15 +118,15 @@ function initialiseState(reg) {
 
 
 function subscribe() {
-  // duplicateNameCheck(nameInput.value).then(function(dupeValue) {
-  //   console.log('Dupe value: ' + dupeValue);
+  duplicateNameCheck(nameInput.value).then(function(dupeValue) {
+    console.log('Dupe value: ' + dupeValue);
 
-  //   if(dupeValue) {
-  //     alert('That username is already in use. Please choose another.');
-  //   } else {
+    if(dupeValue) {
+      alert('That username is already in use. Please choose another.');
+    } else {
 
-      // Disable the button so it can't be changed while
-      // we process the permission request
+      //Disable the button so it can't be changed while
+      //we process the permission request
 
       subBtn.disabled = true;
 
@@ -162,8 +162,8 @@ function subscribe() {
             }
           });
       });
-  //   }
-  // });  
+    }
+  });  
 }
 
 function unsubscribe() {
