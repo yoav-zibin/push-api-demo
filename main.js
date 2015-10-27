@@ -118,15 +118,15 @@ function initialiseState(reg) {
 
 
 function subscribe() {
-  duplicateNameCheck(nameInput.value).then(function(dupeValue) {
-    console.log('Dupe value: ' + dupeValue);
+  // duplicateNameCheck(nameInput.value).then(function(dupeValue) {
+  //   console.log('Dupe value: ' + dupeValue);
 
-    if(dupeValue) {
-      alert('That username is already in use. Please choose another.');
-    } else {
+  //   if(dupeValue) {
+  //     alert('That username is already in use. Please choose another.');
+  //   } else {
 
-      //Disable the button so it can't be changed while
-      //we process the permission request
+      // Disable the button so it can't be changed while
+      // we process the permission request
 
       subBtn.disabled = true;
 
@@ -162,8 +162,8 @@ function subscribe() {
             }
           });
       });
-    }
-  });  
+  //   }
+  // });  
 }
 
 function unsubscribe() {
@@ -373,36 +373,36 @@ function sendChatMessage(chatMsg) {
   })
 }
 
-function duplicateNameCheck(name) {
-  return new Promise(function(resolve, reject) {
-    var dupeValue;
-    var request = new XMLHttpRequest();
+// function duplicateNameCheck(name) {
+//   return new Promise(function(resolve, reject) {
+//     var dupeValue;
+//     var request = new XMLHttpRequest();
 
-    request.open('POST', 'https://127.0.0.1:7000');
-    request.setRequestHeader('Content-Type', 'application/json');
+//     request.open('POST', 'https://127.0.0.1:7000');
+//     request.setRequestHeader('Content-Type', 'application/json');
 
-    var messageObj = {
-                        statusType: 'dupeCheck',
-                        name: name,
-                        endpoint: null
-                     }
+//     var messageObj = {
+//                         statusType: 'dupeCheck',
+//                         name: name,
+//                         endpoint: null
+//                      }
 
-    request.onreadystatechange = function() {
-      if (request.readyState === XMLHttpRequest.DONE) {
-        if (request.status === 200) {
-          if(request.responseText === 'true') {
-            console.log('has it returned anything?');
-            resolve(dupeValue = true);
-          } else {
-            resolve(dupeValue = false);
-          }
-        } else {
-          reject(Error('There was a problem with the request.'));
-        }
-      }
-    }
+//     request.onreadystatechange = function() {
+//       if (request.readyState === XMLHttpRequest.DONE) {
+//         if (request.status === 200) {
+//           if(request.responseText === 'true') {
+//             console.log('has it returned anything?');
+//             resolve(dupeValue = true);
+//           } else {
+//             resolve(dupeValue = false);
+//           }
+//         } else {
+//           reject(Error('There was a problem with the request.'));
+//         }
+//       }
+//     }
 
 
-    request.send(JSON.stringify(messageObj));
-  });
-}
+//     request.send(JSON.stringify(messageObj));
+//   });
+// }
