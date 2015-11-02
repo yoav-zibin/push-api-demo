@@ -95,6 +95,7 @@ function initialiseState(reg) {
         
         // initialize status, which includes setting UI elements for subscribed status
         // and updating Subscribers list via push
+        console.log(subscription.toJSON());
         var endpoint = subscription.endpoint;
         var key = subscription.getKey('p256dh');
         console.log(key);
