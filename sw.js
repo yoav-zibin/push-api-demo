@@ -12,6 +12,7 @@ self.addEventListener('push', function(event) {
 });
 
 self.onmessage = function(e) {
+  console.log(e);
   port = e.ports[0];
 }
 
