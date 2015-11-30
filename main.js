@@ -108,6 +108,7 @@ function initialiseState(reg) {
       // set up a message channel to communicate with the SW
       var channel = new MessageChannel();
       channel.port1.onmessage = function(e) {
+        console.log(e);
         handleChannelMessage(e.data);
       }
       
