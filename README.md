@@ -27,7 +27,7 @@ To get it running:
 
 
 1. Make sure you are using [Firefox Nightly](https://nightly.mozilla.org/).
-2. Clone this repo locally (you'll need to [install git](http://www.git-scm.com/downloads, then use the command `git clone https://github.com/chrisdavidmills/push-api-demo.git`)).
+2. Clone this repo locally (you'll need to [install git](http://git-scm.com/downloads), then use the command `git clone https://github.com/chrisdavidmills/push-api-demo.git`).
 3. Install [NodeJS](https://nodejs.org/) on your computer.
 4. Install Marco Castelluccio's [web-push library](https://github.com/marco-c/web-push) using the command `npm install web-push`.
 5. Load the [sample app](https://chrisdavidmills.github.io/push-api-demo/) in Firefox Nightly. Note that it needs to run under HTTPS, as Service workers will only run in a secure context.
