@@ -222,28 +222,7 @@ function unsubscribe() {
   });
 }
 
-function updateStatus(endpoint,key,statusType) {
-  // If we are subscribing to push
-  if(statusType === 'subscribe') {
-    console.log(endpoint);
-    console.log(key);
-    
-    // Create the input and button to allow sending messages
-    sendBtn = document.createElement('button');
-    sendInput = document.createElement('input');
-
-    sendBtn.textContent = 'Send Chat Message';
-    sendInput.setAttribute('type','text');
-    // Append them to the document
-    controlsBlock.appendChild(sendBtn);
-    controlsBlock.appendChild(sendInput);
-
-    // Set up a listener so that when the Send Chat Message button is clicked,
-    // the sendChatMessage() function is fun, which handles sending the message 
-    sendBtn.onclick = function() {
-      sendChatMessage(sendInput.value);
-    }
-
+function postSubscribeObj(statusType, name, endpoint, key) {
     // Create a new XHR and send an array to the server containing
     // the type of the request, the name of the user subscribing, 
     // and the push subscription endpoint + key the server needs
@@ -261,43 +240,21 @@ function updateStatus(endpoint,key,statusType) {
                        }
     console.log(subscribeObj);
     request.send(JSON.stringify(subscribeObj));
+}
 
-
-  } else if(statusType === 'unsubscribe') {
-    // If we are unsubscribing from push
-
-    // Remove the UI elements we added when we subscribed
-    controlsBlock.removeChild(sendBtn);
-    controlsBlock.removeChild(sendInput);
+function updateStatus(endpoint,key,statusType) {
+    console.log("updateStatus, endpoint: " + endpoint);
+    console.log("updateStatus, key: " + key);
     
-    // Create a new XHR and send an object to the server containing
-    // the type of the request, the name of the user unsubscribing, 
-    // and the associated push endpoint/key 
-    var request = new XMLHttpRequest();
-
-    request.open('POST', 'https://127.0.0.1:7000');
-    request.setRequestHeader('Content-Type', 'application/json');
-    
-    var subscribeObj = {
-                         statusType: statusType,
-                         name: nameInput.value,
-                         endpoint: endpoint,
-                         key: btoa(String.fromCharCode.apply(null, new Uint8Array(key)))
-                       }
-    console.log(subscribeObj);
-    request.send(JSON.stringify(subscribeObj));
-
-  } else if(statusType === 'init') {
-    // If we are just initialising the app once (re)loaded
-
-    // Create the UI elements as required
+  // If we are subscribing to push
+  if(statusType === 'subscribe' || statusType === 'init') {
+    // Create the input and button to allow sending messages
     sendBtn = document.createElement('button');
     sendInput = document.createElement('input');
 
     sendBtn.textContent = 'Send Chat Message';
     sendInput.setAttribute('type','text');
-    
-    // Append them to the body
+    // Append them to the document
     controlsBlock.appendChild(sendBtn);
     controlsBlock.appendChild(sendInput);
 
@@ -307,25 +264,19 @@ function updateStatus(endpoint,key,statusType) {
       sendChatMessage(sendInput.value);
     }
 
-    // Create a new XHR and send an object to the server containing
-    // the type of the request, the name of the user initialising the app, 
-    // and the associated push endpoint/key 
-    var request = new XMLHttpRequest();
+    postSubscribeObj(statusType, name, endpoint, key);
 
-    request.open('POST', 'https://127.0.0.1:7000');
-    request.setRequestHeader('Content-Type', 'application/json');
+  } else if(statusType === 'unsubscribe') {
+    // If we are unsubscribing from push
+
+    // Remove the UI elements we added when we subscribed
+    controlsBlock.removeChild(sendBtn);
+    controlsBlock.removeChild(sendInput);
     
-    var subscribeObj = {
-                         statusType: statusType,
-                         name: nameInput.value,
-                         endpoint: endpoint,
-                         key: btoa(String.fromCharCode.apply(null, new Uint8Array(key)))
-                       }
-    console.log(subscribeObj);
-    request.send(JSON.stringify(subscribeObj));
-
+    postSubscribeObj(statusType, name, endpoint, key);
 
   }
+
 }
 
 function handleChannelMessage(data) {
