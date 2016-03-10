@@ -1,5 +1,7 @@
-var fs = require('fs'),
+var express = require('express'),
+    fs = require('fs'),
     https = require('https'),
+    serveStatic = require('serve-static'),
     url = require('url'),
     webPush = require('web-push');
 
@@ -10,7 +12,9 @@ var options = {
 
 var dupe = 'true';
 
-https.createServer(options, function (request, response) {
+var app = express();
+app.use(serveStatic(__dirname, {'index': false}));
+app.post('/', function (request, response) {
     var body = "";
 
     request.on('data', function(chunk) {
@@ -123,5 +127,8 @@ response.write(dupe);
 
 response.end();
 
-}).listen(7000);
+});
+
+var httpsServer = https.createServer(options, app)
+httpsServer.listen(7000);
 console.log("Server Running on 7000.");   
